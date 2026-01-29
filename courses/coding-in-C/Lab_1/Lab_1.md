@@ -83,7 +83,7 @@ Follow-up section to section V.
 
 1. Create a new branch called "lorem-ipsum".
 2. Display all existing branches and then switch onto the new branch.
-3. Create a new .txt-file. Navigate to the webpage [loremipsum.de](https://www.loremipsum.de/) and copy/paste some text into the file.
+3. Create a new. Navigate to the webpage [loremipsum.de](https://www.loremipsum.de/) and copy/paste some text into the file.
 4. Verify git status and then move the changes to the staging area.
 5. Verify git status again and then commit these changes.
 6. Switch back to the main branch.
