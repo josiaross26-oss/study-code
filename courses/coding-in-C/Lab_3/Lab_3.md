@@ -40,4 +40,13 @@ The result of 3.00 + 4.00 = 7.00
 
 ## Section II
 
+<<<<<<< HEAD
 Adapt the program of Section I by swapping the if-statements with a switch-case block.
+=======
+Adapt the program of Section I by swapping the if-statements with a switch-case block.
+
+## Section III
+
+Adapt the program of the previous section by moving each arithmetical operation to a separate function.
+These functions are then called if the user selects the corresponding operation.
+>>>>>>> 3cbf1e6a48e10e9e1b2decf1ce6a5dbb403a913b
