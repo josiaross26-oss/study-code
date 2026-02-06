@@ -2,14 +2,20 @@
 
 
 int main() {
-    float f_nummer1;
-    float f_nummer2;
-    char c_operator;
+    float f_nummer1 = 0;
+    float f_nummer2 = 0;
+    char c_operator = 0;
 
     printf("Gebe die erste Zahl ein: ");
-    scanf("%f", &f_nummer1);
+    if (scanf("%f", &f_nummer1) != 1) {
+        printf("Bitte gebe eine Zahl ein!");
+        return 0;
+    }
     printf("\nGebe die zweite Zahl ein: ");
-    scanf("%f", &f_nummer2);
+    if (scanf("%f", &f_nummer2) != 1) {
+        printf("Bitte gebe eine Zahl ein!");
+        return 0;
+    }
     printf("\nGebe die Operation ein ('+', '-', '*','/'): ");
     scanf(" %c", &c_operator);
 

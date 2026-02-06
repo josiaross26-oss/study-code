@@ -33,11 +33,12 @@ int main() {
             break;
 
         case '/':
-            printf("Das Ergebnis von %.2f / %.2f = %.2f\n\n", f_nummer1, f_nummer2, f_nummer1/f_nummer2);
+            if (f_nummer2 == 0) printf("Keine Lösung, du darfst nicht durch 0 teilen!\n\n");
+            else printf("Das Ergebnis von %.2f / %.2f = %.2f\n\n", f_nummer1, f_nummer2, f_nummer1/f_nummer2);
             break;
         
         default: 
-            printf("Keine Lösung, du darfst nicht durch 0 teilen!\n\n");
+            printf("Bitte gebe einen gültigen Operator ein\n\n");
             break;
     }
 
