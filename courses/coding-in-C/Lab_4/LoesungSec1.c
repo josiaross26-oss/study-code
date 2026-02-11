@@ -44,7 +44,7 @@ int main()
 
     string_uebergeben(satz);
 
-    char satz2[30] = "AAtions speak louder than words";
+    char satz2[32] = "AAtions speak louder than words";
 
     string_uebergeben(satz2);
 
