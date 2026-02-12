@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 /**
  * @brief Funktion ließt ein Wort ein
@@ -30,6 +31,15 @@ void einlesen(char wort[], int *p_laenge)
 void auswerten(char wort[], int laenge)
 {
     int hilfsvariable = 0;
+
+    while (wort[hilfsvariable] != '\0')
+    {
+        wort[hilfsvariable] = tolower(wort[hilfsvariable]);
+        hilfsvariable++;
+    }
+
+    hilfsvariable = 0;
+
     while (wort[hilfsvariable] == wort[laenge])
     {
         if (hilfsvariable == laenge || hilfsvariable+1 == laenge)
