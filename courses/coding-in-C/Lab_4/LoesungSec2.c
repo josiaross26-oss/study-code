@@ -1,5 +1,5 @@
 /*
- * File: LoesungSec1.c
+ * File: LoesungSec2.c
  * Description: Palindrom erkennen
  */
 #include <stdio.h>
@@ -19,7 +19,7 @@ void einlesen(char wort[], int *p_laenge)
         printf("Gebe ein richtiges Wort ein");
         exit(1);
     }
-    *p_laenge = strlen(wort)-2;
+    *p_laenge = strlen(wort)-2; //damit das \n das bei fgets eingelesen wurde abgezogen wird und man von 0 anfängt
 }
 
 /**

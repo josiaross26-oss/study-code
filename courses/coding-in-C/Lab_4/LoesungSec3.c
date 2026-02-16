@@ -1,5 +1,5 @@
 /*
- * File: LoesungSec1.c
+ * File: LoesungSec3.c
  * Description: Palindrom erkennen
  */
 #include <stdio.h>
