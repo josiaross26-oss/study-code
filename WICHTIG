@@ -1,0 +1,5 @@
+Fehler Check bei: 
+
+- Datei -> fopen/fclose
+- Fgets
+- Malloc, calloc und realloc
