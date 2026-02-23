@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+//WICHTIG LAUT PAUL: BEI JEDEM FEHLER CHECK EIN FCLOSE REINMACHEN!!!
+//FEHLER BENENNEN -> FINDET MAN EINFACHER
+//WÜRDE SICH LOHNEN NICHT RETURN, SONDERN EXIT ZU NEHMEN
+
+
+
 int main() {
     //fprintf
     FILE *schreiben1 = fopen("versuch.txt", "w");
