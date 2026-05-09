@@ -92,7 +92,7 @@ Use the what-method to output the catched exception.
 
 ---
 
-## Part 2 – Moderate: Multiple Catch Blocks
+## 🟢 Part 2: Multiple Catch Blocks
 
 Extend your program so that different exception types are handled separately.
 
@@ -102,7 +102,7 @@ Discuss why the order of `catch` blocks matters.
 
 ---
 
-## Part 3 – Moderate: Custom Exception Classes
+## 🟡 Part 3: Custom Exception Classes
 
 Create a custom exception class called __SensorFailureError__ representing a specialized form of a runtime error.
 
@@ -128,3 +128,219 @@ Catch this exception in `main()`.
 5. Why should `catch (const std::exception& e)` usually appear after more specific `catch` blocks?
 6. Why should exceptions not be used for normal control flow?
 7. What happens if an exception is never caught?
+
+## Section II: Smart Pointers
+
+In this section you will practice memory management using smart pointers in C++.
+
+You will practice the following concepts:
+
+* `std::unique_ptr`
+* `std::shared_ptr`
+* `make_unique` and `make_shared`
+
+---
+
+## Task Description
+
+You are part of a software engineering team developing a streaming platform.
+
+The platform manages different types of media devices:
+
+* speakers
+* displays
+* microphones
+
+Devices can either:
+
+* belong exclusively to one room
+* or be shared between multiple rooms
+
+The system should use smart pointers instead of raw pointers for memory management.
+
+---
+
+## 🟡 Part 1: `std::unique_ptr`
+
+Create a class `Device`.
+
+The class should contain:
+
+1. device name
+2. device type
+3. power status
+
+Add methods:
+
+1. `turn_on()`
+2. `turn_off()`
+3. `print_info()`
+
+Add a destructor that outputs a message when a device is destroyed.
+
+---
+
+Create a class `Room`.
+
+The class should contain:
+
+1. room name
+2. a collection of devices
+
+Rules:
+
+* each device belongs to exactly one room
+* devices must be managed using `std::unique_ptr`
+* use `std::make_unique` when creating devices
+
+Add methods:
+
+1. `add_device(...)`
+2. `remove_device(...)`
+3. `print_devices()`
+
+---
+
+### Testing in `main()`
+
+Create multiple rooms and devices.
+
+Move devices into rooms using:
+
+```cpp
+std::move(...)
+```
+
+After moving, test whether the original pointer became `nullptr`.
+
+---
+
+## 🟡 Part 2: Ownership Semantics
+
+Answer the following questions by experimenting with code:
+
+1. What happens if you try to copy a `std::unique_ptr`?
+2. Why is `std::move(...)` required?
+3. What happens to the original pointer after moving?
+4. When is the destructor automatically called?
+
+---
+
+## 🟠 Part 3: `std::shared_ptr`
+
+Some devices should be shareable between multiple rooms.
+
+Example:
+
+* a central music server
+* a network storage device
+
+Create a class `SharedDevice`.
+
+The class should contain:
+
+1. device name
+2. device type
+
+Use:
+
+```cpp
+std::shared_ptr
+```
+
+to manage these devices.
+
+---
+
+Modify the `Room` class so that rooms may also contain shared devices.
+
+Add methods:
+
+1. `add_shared_device(...)`
+2. `print_shared_devices()`
+
+Use:
+
+```cpp
+std::make_shared(...)
+```
+
+when creating shared devices.
+
+---
+
+### Example
+
+```cpp
+std::shared_ptr<SharedDevice> server =
+    std::make_shared<SharedDevice>(
+        "Main Server",
+        "Streaming"
+    );
+```
+
+Add the same shared device to multiple rooms.
+
+---
+
+### Testing in `main()`
+
+Use:
+
+```cpp
+use_count()
+```
+
+to observe shared ownership.
+
+Example:
+
+```cpp
+std::cout << server.use_count()
+          << std::endl;
+```
+
+Check the reference counter:
+
+1. after creation
+2. after adding to rooms
+3. after rooms are destroyed
+
+---
+
+## 🔴 Part 4: Comparing `unique_ptr` and `shared_ptr`
+
+Experiment with both smart pointer types and answer the following questions:
+
+1. Which pointer type supports exclusive ownership?
+2. Which pointer type supports shared ownership?
+3. Which pointer type has less overhead?
+4. Why can `shared_ptr` be more expensive?
+5. In which situations should `unique_ptr` be preferred?
+6. When is `shared_ptr` appropriate?
+
+---
+
+## Requirements
+
+Your solution must contain:
+
+1. at least one `std::unique_ptr`
+2. at least one `std::shared_ptr`
+3. usage of `std::move(...)`
+4. usage of `make_unique`
+5. usage of `make_shared`
+6. at least one destructor output
+7. at least one `use_count()` test
+
+---
+
+## Reflection Questions
+
+1. Why are smart pointers safer than raw pointers?
+2. What problem does `std::unique_ptr` solve?
+3. Why can `std::unique_ptr` not be copied?
+4. What problem does `std::shared_ptr` solve?
+5. What does `use_count()` represent?
+6. Why can cyclic references become problematic with `std::shared_ptr`?
+7. Which smart pointer should usually be preferred in modern C++?
