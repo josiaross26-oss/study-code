@@ -152,7 +152,7 @@ Create a custom exception class called __SensorFailureError__ representing a spe
 
 It should return the error message ```Sensor is unreachable```.
 
-Then add a method:
+Then add a method to the Sensor class:
 
 ```cpp
 simulate_failure()
