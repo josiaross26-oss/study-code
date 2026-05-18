@@ -1,0 +1,24 @@
+Aufgabenteil 1 – Das Diagramm verstehen
+
+Analysieren Sie das UML-Diagramm und beantworten Sie:
+
+- Welche Klassen werden modelliert?
+	Library, Member, Librarian, Loan, EBook, PrintedBook, Book
+- Welche Attribute und Methoden sind von außerhalb der Klasse sichtbar?
+	- Library: addBook()
+	- Librarian: salary und register()
+	- Loan: close()
+	- Member: borrow()
+	- EBook: download()
+	- PrintedBook: printLocation()
+	- Book: title, isbn, available, borrow()
+	+ öffentliche Attribute/Methoden die vererbt wurden
+- Welche Vererbungsbeziehungen werden dargestellt?
+	- PrintedBook und EBook erben von Book
+	- Librarian erbt von Member
+- Welche Kompositions-, Aggregations- oder Assoziationsbeziehungen werden dargestellt?
+	- Library und Book ist Komposition
+	- Library und Member ist Aggregation
+	- Library und Librarian ist Assoziation
+	- Member und Loan ist Assotiation
+	- Loan und Book ist Komposition
