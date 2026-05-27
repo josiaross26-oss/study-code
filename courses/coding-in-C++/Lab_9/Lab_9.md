@@ -81,7 +81,7 @@ After sign-in, VS Code should show that Copilot is enabled.
 
 ---
 
-### Step 5: Verify Inline Suggestions
+### Step 4: Verify Inline Suggestions
 
 Create a new file:
 
@@ -115,7 +115,7 @@ If no suggestion appears, check:
 
 ---
 
-### Step 6: Verify Copilot Chat
+### Step 5: Verify Copilot Chat
 
 Open Copilot Chat in VS Code via:
 
@@ -176,7 +176,7 @@ Requirements:
 
 * Throw `std::invalid_argument` if the vector is empty
 * Use `const` where appropriate
-* Avoid magic numbers
+* Follow our C++ coding conventions
 * contain at least one test call per function in main
 
 Then use GitHub Copilot Chat or inline prompting to:
@@ -184,7 +184,7 @@ Then use GitHub Copilot Chat or inline prompting to:
 * generate Doxygen comments for all functions
 * generate additional comments inside the .cpp file where useful
 
-Fell free to use different prompts for different outputs.
+Feel free to use different prompts for different outputs.
 
 ---
 
@@ -213,34 +213,48 @@ AI can help explain existing code. This is useful when working with unfamiliar c
 Use your files from the previous section II and extend them with:
 
 ```cpp
-
-int count_even_numbers(const std::vector<int>& values)
+std::vector<int> find_unique_sorted_values(const std::vector<int>& values)
 {
-    int counter = 0;
+    std::vector<int> result = values;
 
-    for (int value : values)
-    {
-        if (value % 2 == 0)
-        {
-            ++counter;
-        }
-    }
+    std::sort(result.begin(), result.end());
 
-    return counter;
+    const auto new_end = std::unique(result.begin(), result.end());
+    result.erase(new_end, result.end());
+
+    return result;
 }
 
-int main()
+std::vector<int> calculate_prefix_sums(const std::vector<int>& values)
 {
-    std::vector<int> numbers = {1, 2, 3, 4, 5, 6};
-    std::cout << count_even_numbers(numbers) << std::endl;
-    return 0;
+    std::vector<int> result(values.size());
+
+    std::partial_sum(values.begin(), values.end(), result.begin());
+
+    return result;
+}
+
+std::vector<std::pair<int, int>> count_value_frequencies(
+    const std::vector<int>& values)
+{
+    std::map<int, int> frequencies;
+
+    for (const int value : values)
+    {
+        ++frequencies[value];
+    }
+
+    return {
+        frequencies.begin(),
+        frequencies.end()
+    };
 }
 ```
 
-Use Copilot Chat to answer the following prompts:
+Use Copilot Chat to answer the following prompts per function:
 
 ```text
-Explain what this code does step by step.
+Explain what this function does step by step.
 ```
 
 ```text
@@ -270,7 +284,7 @@ Document for each prompt you used:
 
 ---
 
-## 🟢 Section IV: AI-Assisted Error Analysis
+## 🟡 Section IV: AI-Assisted Error Analysis
 
 AI is often helpful when compiler errors, linker errors, runtime errors, stack traces, or CI/CD logs are long and difficult to read. The AI should be treated as a debugging assistant that proposes hypotheses, not as an authority.
 
@@ -314,9 +328,7 @@ g++ -std=c++20 -Wall -Wextra -pedantic broken_sensor_myFix.cpp -o broken_sensor_
 
 ### Required Results
 
-Submit:
-
-* Compare how much time you spent and the result (i.e. found all errors) with the result and time when using AI
+* Compare time and the result (i.e. found all errors) with and without AI
 * Was AI able to find all the bugs?
 * Was there something that AI had some troubles with?
 
@@ -330,96 +342,51 @@ Refactoring means improving the internal structure of existing code without chan
 
 ### Task Description
 
-Create a file:
+For the following tasks, use the file in this folder called:
 
 ```text
-temperature_report.cpp
+stock_analyzer.cpp
 ```
 
-Insert the following code:
+In the code of this file, many design guidelines and patterns are ignored such as:
 
-```cpp
-#include <iostream>
-#include <vector>
+* SOLID Principles
+* Factory Pattern
 
-void print_temperature_report(const std::vector<double>& temperatures)
-{
-    double sum = 0.0;
-    double min = temperatures[0];
-    double max = temperatures[0];
+Your task is to improve the code base without changing the visible output and behaviour of the code.
+Ask Copilot to refactor the code following two separate approaches:
 
-    for (double temperature : temperatures)
-    {
-        sum += temperature;
-
-        if (temperature < min)
-        {
-            min = temperature;
-        }
-
-        if (temperature > max)
-        {
-            max = temperature;
-        }
-    }
-
-    double average = sum / temperatures.size();
-
-    std::cout << "Average: " << average << std::endl;
-    std::cout << "Minimum: " << min << std::endl;
-    std::cout << "Maximum: " << max << std::endl;
-}
-
-int main()
-{
-    std::vector<double> temperatures = {18.5, 20.0, 19.5, 21.0};
-    print_temperature_report(temperatures);
-    return 0;
-}
-```
-
-Ask Copilot to refactor the code.
-
-Use prompts like:
+__First approach:__
+* Copy the file and name the copy ```stock_analyzer_simplePrompt.cpp```. 
+* Use one simple prompt such as:
 
 ```text
-Refactor this code to improve readability and separation of concerns. Do not change the observable behavior.
+Refactor this code to improve the overall coding style and the code design to increase readability and maintainability.
 ```
+* Review the proposal carefully and apply only changes that you understand
 
+__Second approach:__
+* Copy the original file again and name the copy ```stock_analyzer_multiplePrompts.cpp```. 
+* Refactor the code by using small and very precise prompts such as:
 ```text
-Extract suitable helper functions and add basic error handling for an empty vector.
+Improve the class StockAnalyzer by applying the Single Responsibility principle so that the size of the class is reduced. Do not change the observable behavior of the code.
 ```
-
-Review the proposal carefully and apply only changes that you understand.
-
----
-
-### Requirements
-
-Your final code should:
-
-* avoid duplicated logic
-* handle an empty vector safely
-* separate calculation from output
-* use meaningful function names
-* use `const` where appropriate
+* Review the proposal carefully and apply only changes that you understand.
+* Repeat the process with more detailed and smaller prompts until you are satisfied.
 
 ---
 
 ### Required Result
 
-Submit:
-
-* the refactored `temperature_report.cpp`
-* a file `section_5_refactoring.md` answering:
+Answer the following questions for both approaches:
 
 ```text
 1. Which refactorings did Copilot suggest?
 2. Which suggestions did you accept?
 3. Which suggestions did you reject?
 4. Did the behavior of the program change?
-5. How did you verify that the refactoring was correct?
 ```
+In addition: Which differences did you experience between the two approaches?
 
 ---
 
@@ -431,12 +398,17 @@ AI can generate unit tests quickly. This is useful for improving test coverage a
 
 ### Task Description
 
-Reuse your files from Section II:
+Reuse your files from the previous sections:
 
 * `statistics.hpp`
 * `statistics.cpp`
 
-Ask Copilot to generate tests for `calculate_average`.
+Ask Copilot to generate tests for atleast three of the functions.
+Start with the function
+
+```cpp
+calculate_average(...)
+```
 
 Use a prompt like:
 
@@ -450,13 +422,15 @@ Create a file:
 statistics_test.cpp
 ```
 
-The tests should cover at least:
+The tests for ``` calculate_average(...) ``` should cover at least:
 
 * average of positive values
 * average of negative values
 * average of mixed positive and negative values
 * vector with one value
 * empty vector throws an exception
+
+For the other functions, think about which test-cases would make sense.
 
 Compile and run your tests.
 
@@ -471,10 +445,7 @@ g++ -std=c++20 -Wall -Wextra -pedantic statistics.cpp statistics_test.cpp -o sta
 
 ### Required Result
 
-Submit:
-
-* `statistics_test.cpp`
-* a file `section_6_unit_tests.md` answering:
+Create a file called `section_6_unit_tests.md` answering:
 
 ```text
 1. Which test cases did Copilot generate?
@@ -482,79 +453,4 @@ Submit:
 3. Did you modify the generated tests?
 4. Did all tests pass?
 5. Why should AI-generated tests be reviewed manually?
-```
-
----
-
-## 🔴 Section VII: AI-Assisted Boilerplate Generation for a Small Class Design
-
-Boilerplate code is repetitive, standardized code that is necessary but often not conceptually difficult. AI can generate boilerplate efficiently, for example class skeletons, constructors, getters, simple method bodies, and file headers.
-
----
-
-### Task Description
-
-Use Copilot to generate the boilerplate for a small C++ class design.
-
-You want to model simple sensors in a monitoring system.
-
-Create the following files:
-
-```text
-sensor.hpp
-sensor.cpp
-temperature_sensor.hpp
-temperature_sensor.cpp
-main.cpp
-```
-
-The design should contain:
-
-* a base class `Sensor`
-* a derived class `TemperatureSensor`
-* a sensor name
-* a virtual method `read_value()`
-* a method to print a short sensor report
-* Doxygen comments for all public classes and methods
-
-Use Copilot for boilerplate generation, but review and adapt all generated code manually.
-
----
-
-### Requirements
-
-Your implementation must:
-
-* use header guards
-* define methods outside the class if they are longer than a few lines
-* use `const` where appropriate
-* avoid raw owning pointers
-* compile with `-std=c++20 -Wall -Wextra -pedantic`
-* keep the design simple
-
-Example command:
-
-```bash
-g++ -std=c++20 -Wall -Wextra -pedantic sensor.cpp temperature_sensor.cpp main.cpp -o sensor_demo
-./sensor_demo
-```
-
----
-
-### Required Result
-
-Submit all generated and reviewed source files plus a file:
-
-```text
-section_7_boilerplate.md
-```
-
-Answer:
-
-```text
-1. Which parts were generated by Copilot?
-2. Which parts did you write or modify manually?
-3. Did Copilot create unnecessary complexity?
-4. Was the generated boilerplate consistent with good C++ style?
-5. What would be dangerous about accepting generated boilerplate without review?
 ```
